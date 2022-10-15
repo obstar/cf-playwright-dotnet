@@ -12,6 +12,7 @@
       <None Remove="SpecFlow" />
       <None Remove="Microsoft.Playwright.NUnit" />
       <None Remove="Microsoft.Playwright" />
+      <None Remove="NUnit" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Configuration\" />
@@ -20,5 +21,6 @@
       <PackageReference Include="SpecFlow" Version="3.9.74" />
       <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.27.1" />
       <PackageReference Include="Microsoft.Playwright" Version="1.27.1" />
+      <PackageReference Include="NUnit" Version="3.13.3" />
     </ItemGroup>
 </Project>
