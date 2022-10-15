@@ -4,6 +4,17 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AssemblyName>CouponFollow.WebTests</AssemblyName>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Remove="Configuration\" />
+      <None Remove="SpecFlow" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Configuration\" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="SpecFlow" Version="3.9.74" />
+    </ItemGroup>
 </Project>
