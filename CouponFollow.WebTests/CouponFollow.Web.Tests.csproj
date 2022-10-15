@@ -10,11 +10,15 @@
     <ItemGroup>
       <None Remove="Configuration\" />
       <None Remove="SpecFlow" />
+      <None Remove="Microsoft.Playwright.NUnit" />
+      <None Remove="Microsoft.Playwright" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Configuration\" />
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="SpecFlow" Version="3.9.74" />
+      <PackageReference Include="Microsoft.Playwright.NUnit" Version="1.27.1" />
+      <PackageReference Include="Microsoft.Playwright" Version="1.27.1" />
     </ItemGroup>
 </Project>
