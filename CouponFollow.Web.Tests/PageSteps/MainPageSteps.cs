@@ -13,7 +13,7 @@ public class MainPageSteps
     {
         _mainPage = mainPage;
     }
-    
+
     [Given(@"I navigate to Main page")]
     public async Task GivenINavigateToMainPage()
     {
@@ -27,8 +27,14 @@ public class MainPageSteps
     }
 
     [Then(@"user can see at least '(.*)' Today's Trending Coupons")]
-    public void ThenUserCanSeeAtLeastTodaysTrendingCoupons(int trendingCoupons)
+    public async Task ThenUserCanSeeAtLeastTodaysTrendingCoupons(int trendingCoupons)
     {
-        ScenarioContext.StepIsPending();
+        await _mainPage.AssertTodaysTrendingCoupons(trendingCoupons);
+    }
+
+    [Then(@"user can see '(.*)' out of possible '(.*)' of Today's Top Coupons")]
+    public async Task ThenUserCanSeeOutOfPossibleOfTodaysTopCoupons(int minCoupons, int maxCoupons)
+    {
+        await _mainPage.AssertTodaysTopCoupons(minCoupons, maxCoupons);
     }
 }
