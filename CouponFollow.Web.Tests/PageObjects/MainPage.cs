@@ -11,8 +11,7 @@ public class MainPage : BasePage
     private readonly ILocator _divTodaysTopCoupons;
     private readonly ILocator _divTodaysTrendingCoupons;
     private readonly ILocator _divTopDealsSwiper;
-
-    // Texts
+    
     private const string Title = "Coupon Codes in Real-Time - CouponFollow";
 
     public override string PagePath => Configuration["mainUrl"];

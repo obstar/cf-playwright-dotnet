@@ -1,8 +1,5 @@
 Feature: Search
 
-#4. Search for an existing CouponFollow store, click on it in order to open a store page.
-#	Then validate that the page is properly displayed.
-
     Background:
         Given I navigate to Nav group
 

@@ -13,8 +13,5 @@ public abstract class BasePage
                                                        .AddJsonFile("appsettings.json")
                                                        .Build();
 
-    public async Task NavigateAsync()
-    {
-        await Page.GotoAsync(PagePath);
-    }
+    public async Task NavigateAsync() => await Page.GotoAsync(PagePath);
 }
