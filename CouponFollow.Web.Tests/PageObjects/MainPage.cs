@@ -11,7 +11,7 @@ public class MainPage : BasePage
     private readonly ILocator _divTodaysTopCoupons;
     private readonly ILocator _divTodaysTrendingCoupons;
     private readonly ILocator _divTopDealsSwiper;
-    
+
     private const string Title = "Coupon Codes in Real-Time - CouponFollow";
 
     public override string PagePath => Configuration["mainUrl"];
@@ -26,6 +26,9 @@ public class MainPage : BasePage
         _divTopDealsSwiper = Page.Locator(".big-cont.top-deals-swiper");
     }
 
+
+    public async Task AssertDiscountText(ILocator? storeElement, string discount) =>
+        Assert.That(await storeElement!.Locator("p").InnerTextAsync(), Is.EqualTo(discount));
 
     public async Task AssertPageLoaded()
     {
@@ -44,4 +47,16 @@ public class MainPage : BasePage
     public async Task AssertTodaysTopCoupons(int minCoupons, int maxCoupons) =>
         Assert.That(await _divTodaysTopCoupons.CountAsync(),
                     Is.InRange(minCoupons, maxCoupons));
+
+    public async Task<ILocator> ReturnStoreElement(string store)
+    {
+        await _divStaffPicks.First.WaitForAsync();
+        for (var i = 0; i < _divStaffPicks.CountAsync().Result; i++)
+        {
+            var element = _divStaffPicks.Nth(i).GetAttributeAsync("data-sitename").Result;
+            if (element == store) return _divStaffPicks.Nth(i);
+        }
+
+        throw new InvalidOperationException("Store element not found!");
+    }
 }
