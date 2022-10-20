@@ -1,5 +1,6 @@
 ﻿using BoDi;
 using CouponFollow.Web.Tests.PageObjects;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Playwright;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -15,13 +16,14 @@ public class BrowserBindings
                                      ScenarioContext scenarioContext)
     {
         Console.WriteLine($"-> [BeforeScenario] {scenarioContext.ScenarioInfo.Title}");
-
+        var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json")
+                                                      .Build();
         var playwright = await Playwright.CreateAsync();
-        var browserType = playwright["Chromium"];
+        var browserType = playwright[configuration["browser:name"]];
         var browser = await browserType.LaunchAsync(new BrowserTypeLaunchOptions
                                                     {
-                                                        Headless = false,
-                                                        SlowMo = 500
+                                                        Headless = Convert.ToBoolean(configuration["headless"]),
+                                                        SlowMo = Convert.ToInt16(configuration["slowMo"])
                                                     });
 
         var mainPage = new MainPage(browser);
