@@ -11,9 +11,11 @@ All tasks are meant to run against our main page - https://couponfollow.com/
 * replace Console.WriteLine with some proper logger
 * I could handle better browser session, currently is through appsettings.json
 * I didn't go with that path of playwright.devices just concentrated on desktop browsers
-* scenario: MainPage - Staff Picks contain unique stores with proper discounts for monetary from MainPage.feature is brittle those stores change a lot, so there should be done refactor to assert that displayed stores are unique for each other and some regex to validate promotion/discount messages 
+* `scenario: MainPage - Staff Picks contain unique stores with proper discounts for monetary` from MainPage.feature is brittle those stores change a lot, so there should be done refactor to assert that displayed stores are unique for each other and some regex to validate promotion/discount messages 
 * I didn't added ExtentReports or Allure for reporting but would be nice to have it
 
 ## Running tests
+
 `dotnet build`
+
 `dotnet test`
