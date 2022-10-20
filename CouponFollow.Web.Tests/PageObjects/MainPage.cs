@@ -1,7 +1,5 @@
-using System.Diagnostics;
 using Microsoft.Playwright;
 using NUnit.Framework;
-using SpecFlow.Internal.Json;
 using TechTalk.SpecFlow;
 
 namespace CouponFollow.Web.Tests.PageObjects;
@@ -9,35 +7,43 @@ namespace CouponFollow.Web.Tests.PageObjects;
 [Binding]
 public class MainPage : BasePage
 {
-    public override string PagePath => "https://couponfollow.com";
-    public sealed override IPage Page { get; set; } = null!;
+    // Selectors
+    private const string StaffPicks = "div.staff-picks [data-domain]";
+    private const string TodaysTopCoupons = ".swiper-wrapper div:not(.swiper-slide-duplicate)";
+    private const string TodaysTrendingCoupons = ".trending-deals.cont > article";
+    private const string TopDealsSwiper = ".big-cont.top-deals-swiper";
 
+    // Texts
+    private const string Title = "Coupon Codes in Real-Time - CouponFollow";
+
+    public override string PagePath => Configuration["mainUrl"];
+    public override IBrowser Browser { get; }
+    public sealed override IPage Page { get; set; } = null!;
 
     public MainPage(IBrowser browser)
     {
         Browser = browser;
     }
 
-    public override IBrowser Browser { get; }
-
 
     public async Task AssertPageLoaded()
     {
-        Assert.That(await Page.TitleAsync(), Is.EqualTo(MainPageConst.Text.Title));
-        Assert.That(await Page.Locator(MainPageConst.Selectors.TopDealsSwiper).IsVisibleAsync(), Is.True);
-        Assert.That(await Page.Locator(MainPageConst.Selectors.StaffPicks).First.IsVisibleAsync(), Is.True);
-        Assert.That(await Page.Locator(MainPageConst.Selectors.TodaysTrendingCoupons).Last.IsVisibleAsync(), Is.True);
+        Assert.That(Page.Url, Is.EqualTo(PagePath));
+        Assert.That(await Page.TitleAsync(), Is.EqualTo(Title));
+        Assert.That(await Page.Locator(TopDealsSwiper).IsVisibleAsync(), Is.True);
+        Assert.That(await Page.Locator(StaffPicks).First.IsVisibleAsync(), Is.True);
+        Assert.That(await Page.Locator(TodaysTrendingCoupons).Last.IsVisibleAsync(), Is.True);
     }
 
     public async Task AssertTodaysTrendingCoupons(int trendingCoupons)
     {
-        Assert.That(await Page.Locator(MainPageConst.Selectors.TodaysTrendingCoupons).CountAsync(),
+        Assert.That(await Page.Locator(TodaysTrendingCoupons).CountAsync(),
                     Is.GreaterThanOrEqualTo(trendingCoupons));
     }
 
     public async Task AssertTodaysTopCoupons(int minCoupons, int maxCoupons)
     {
-        Assert.That(await Page.Locator(MainPageConst.Selectors.TodaysTopCoupons).CountAsync(),
+        Assert.That(await Page.Locator(TodaysTopCoupons).CountAsync(),
                     Is.InRange(minCoupons, maxCoupons));
     }
 }

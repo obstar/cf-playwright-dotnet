@@ -22,8 +22,9 @@ public class BrowserBindings
         var browserType = playwright[configuration["browser:name"]];
         var browser = await browserType.LaunchAsync(new BrowserTypeLaunchOptions
                                                     {
-                                                        Headless = Convert.ToBoolean(configuration["headless"]),
-                                                        SlowMo = Convert.ToInt16(configuration["slowMo"])
+                                                        Headless = bool.Parse(configuration["browser:headless"]),
+                                                        SlowMo = int.Parse(configuration["browser:slowMo"]),
+                                                        Channel = configuration["browser:channel"]
                                                     });
 
         var mainPage = new MainPage(browser);
@@ -32,7 +33,7 @@ public class BrowserBindings
         specFlowContainer.RegisterInstanceAs(mainPage);
     }
 
-    [AfterScenario(Order = 10)]
+    [AfterScenario]
     public async Task AfterEachScenario(IObjectContainer specFlowContainer,
                                         ScenarioContext scenarioContext)
     {
