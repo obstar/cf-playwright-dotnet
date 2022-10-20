@@ -26,11 +26,18 @@ public class BrowserBindings
                                                         SlowMo = int.Parse(configuration["browser:slowMo"]),
                                                         Channel = configuration["browser:channel"]
                                                     });
-
-        var mainPage = new MainPage(browser);
+        var page = await browser.NewPageAsync();
+        await page.SetViewportSizeAsync(int.Parse(configuration["browser:width"]),
+                                        int.Parse(configuration["browser:height"]));
+        
+        var mainPage = new MainPage(page);
+        var navGroupObj = new NavGroupObj(page);
+        
         specFlowContainer.RegisterInstanceAs(playwright);
         specFlowContainer.RegisterInstanceAs(browser);
+        specFlowContainer.RegisterInstanceAs(page);
         specFlowContainer.RegisterInstanceAs(mainPage);
+        specFlowContainer.RegisterInstanceAs(navGroupObj);
     }
 
     [AfterScenario]
